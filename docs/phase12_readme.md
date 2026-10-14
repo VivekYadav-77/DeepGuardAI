@@ -1,4 +1,4 @@
-﻿# Phase 12 — README and Reproducibility
+# Phase 12 — README and Reproducibility
 
 > **AGENT INSTRUCTION:** Read `masterplan.md` and `context.md` before starting. Create the project `README.md` at the root of the project. Use actual values from `context.md` for all dataset and metric references. This is the final phase before the project is considered complete.
 
@@ -133,13 +133,13 @@ This project is not suitable for production security infrastructure.
 
 ## Output Checklist
 
-- [ ] `README.md` created at project root
-- [ ] All sections from the structure above present
-- [ ] Real metrics from `context.md` inserted (or `[FILL IN]` markers)
-- [ ] Deployment URL included or marked as pending
-- [ ] Hugging Face YAML header added (for HF Spaces compatibility)
-- [ ] Phase 12 marked COMPLETE in `context.md`
-- [ ] All 18 items in the Definition of Done reviewed and honestly marked
+- [x] `README.md` created at project root
+- [x] All sections from the structure above present
+- [x] Real metrics from `context.md` inserted (or `[FILL IN]` markers)
+- [x] Deployment URL included or marked as pending
+- [x] Hugging Face YAML header added (for HF Spaces compatibility)
+- [x] Phase 12 marked COMPLETE in `context.md`
+- [x] All 18 items in the Definition of Done reviewed and honestly marked
 
 ---
 

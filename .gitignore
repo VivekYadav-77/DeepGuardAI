@@ -20,6 +20,9 @@ dist/
 dashboard/node_modules/
 dashboard/.next/
 dashboard/.temp/
+frontend/node_modules/
+frontend/.next/
+frontend/.temp/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -29,6 +32,7 @@ dashboard/.temp/
 data/
 *.csv
 !dashboard/public/*.csv
+!frontend/public/*.csv
 *.tsv
 *.txt.gz
 *.parquet

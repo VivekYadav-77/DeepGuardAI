@@ -122,3 +122,29 @@ def test_all_phase_docs_exist():
     for doc in expected_docs:
         doc_path = docs_dir / doc
         assert doc_path.exists(), f"docs/{doc} is missing"
+
+
+def test_root_readme_exists_and_complete():
+    """Verify that root README.md exists and contains critical sections and real metrics."""
+    readme_path = ROOT_DIR / "README.md"
+    assert readme_path.exists(), "README.md is missing at project root"
+    content = readme_path.read_text(encoding="utf-8")
+    assert len(content) > 2000, "README.md is suspiciously short"
+    
+    # Check critical sections and keywords
+    required_keywords = [
+        "DeepGuard AI",
+        "NSL-KDD",
+        "DeepGuardMLP",
+        "PyTorch",
+        "FastAPI",
+        "Next.js",
+        "Evaluation Results",
+        "Known Limitations",
+        "Confusion Matrix",
+        "99.47%",
+        "18,896",
+    ]
+    for kw in required_keywords:
+        assert kw in content, f"README.md missing expected keyword: '{kw}'"
+

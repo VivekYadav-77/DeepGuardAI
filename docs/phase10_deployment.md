@@ -77,15 +77,15 @@ Add these exact steps to `vivek.md`:
    - **Name:** `deepguard-ai-api`
    - **Region:** Any close region (e.g., *Oregon (US West)* or *Frankfurt*)
    - **Branch:** `main`
-   - **Root Directory:** *(leave blank / repo root)*
+   - **Root Directory:** `backend` *(CRITICAL: select the backend folder)*
    - **Runtime:** `Python 3`
    - **Build Command:**
      ```bash
-     pip install --no-cache-dir -r requirements-render.txt
+     pip install --no-cache-dir -r requirements.txt
      ```
    - **Start Command:**
      ```bash
-     uvicorn src.api:app --host 0.0.0.0 --port $PORT
+     uvicorn main:app --host 0.0.0.0 --port $PORT
      ```
    - **Instance Type:** `Free` (512 MB RAM, 0.1 CPU)
 5. Under **Environment Variables**, add:
@@ -105,7 +105,7 @@ Add these exact steps to `vivek.md`:
 4. Configure Project settings:
    - **Project Name:** `deepguard-ai`
    - **Framework Preset:** `Next.js`
-   - **Root Directory:** Click **Edit** and set to `dashboard` (CRITICAL: must point to `dashboard` folder).
+   - **Root Directory:** Click **Edit** and set to `frontend` *(CRITICAL: select the frontend folder)*.
 5. Expand **Environment Variables** and add:
    - **Name:** `BACKEND_URL`
    - **Value:** `https://deepguard-ai-api.onrender.com` (use your actual Render URL from Step 2)

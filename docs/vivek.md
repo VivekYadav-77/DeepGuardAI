@@ -188,15 +188,15 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
   - **Name:** `deepguard-ai-api`
   - **Region:** Any region (e.g., *Oregon (US West)* or *Frankfurt*)
   - **Branch:** `main`
-  - **Root Directory:** *(leave blank / repo root)*
+  - **Root Directory:** `backend` *(CRITICAL: type or select the backend folder)*
   - **Runtime:** `Python 3`
   - **Build Command:**
     ```bash
-    pip install --no-cache-dir -r requirements-render.txt
+    pip install --no-cache-dir -r requirements.txt
     ```
   - **Start Command:**
     ```bash
-    uvicorn src.api:app --host 0.0.0.0 --port $PORT
+    uvicorn main:app --host 0.0.0.0 --port $PORT
     ```
   - **Instance Type:** `Free` (512 MB RAM, 0.1 CPU)
 - [ ] Under **Environment Variables**, add:
@@ -216,7 +216,7 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
 - [ ] Find and **Import** your `DeepGuard AI` repository
 - [ ] Configure the project:
   - **Framework Preset:** `Next.js`
-  - **Root Directory:** Click **Edit** and choose `dashboard` *(CRITICAL STEP)*
+  - **Root Directory:** Click **Edit** and choose `frontend` *(CRITICAL: select the frontend folder)*
 - [ ] Expand **Environment Variables** and add:
   - Key: `BACKEND_URL` | Value: `https://deepguard-ai-api.onrender.com` (your Render URL from Part 2)
   - Key: `NEXT_PUBLIC_API_URL` | Value: `https://deepguard-ai-api.onrender.com`
