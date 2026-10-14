@@ -187,37 +187,36 @@ The system is trained and benchmarked on the curated **NSL-KDD** dataset from th
 ```
 DeepGuard-AI/
 ├── app.py                          # Unified CLI launcher & Streamlit compatibility entrypoint
-├── requirements.txt                # Full dependencies (training, evaluation, and dashboard)
-├── requirements-render.txt         # Minimal CPU-only dependencies for Render deployment
-├── render.yaml                     # Infrastructure-as-code blueprint for Render Web Service
+├── requirements.txt                # Full dependencies (training, evaluation, and backend API)
 ├── README.md                       # Master project documentation and reproducibility guide
 ├── .gitignore                      # Git exclusion rules for virtualenvs, caches, and raw data
 ├── pytest.ini                      # Pytest test discovery configuration
 ├── deepguard_artifacts.zip         # Portable standalone deployment bundle (143.5 KB)
 │
-├── backend/                        # Standalone Render deployment package
+├── frontend/                       # Standalone Next.js 14 Frontend (Vercel deployment)
+│   ├── package.json                # Frontend dependencies & scripts
+│   ├── next.config.js              # Next.js build & routing configuration
+│   ├── .env.example                # Frontend environment template
+│   ├── .env.local                  # Local development config (http://localhost:8000)
+│   ├── .env.production             # Vercel production config
+│   ├── app/                        # Next.js App Router (pages, layout, glassmorphic styles)
+│   │   ├── layout.js               # Root layout with metadata and fonts
+│   │   ├── page.js                 # Unified 5-tab dashboard view
+│   │   ├── globals.css             # Obsidian & slate glassmorphism design system
+│   │   └── api/                    # Server-side API proxies
+│   │       ├── metrics/route.js    # Metric retrieval proxy with local fallback
+│   │       ├── predict/route.js    # Batch inference proxy to remote backend
+│   │       └── sample-data/route.js# Built-in benign and attack telemetry presets
+│   └── public/                     # Static sample CSVs, favicon & performance plots
+│
+├── backend/                        # Standalone FastAPI Backend (Render deployment)
 │   ├── main.py                     # Independent FastAPI application entrypoint
 │   ├── requirements.txt            # Render backend dependencies (CPU PyTorch wheel)
-│   ├── render.yaml                 # Backend blueprint
+│   ├── render.yaml                 # Backend blueprint for Render Web Service
 │   ├── .env.example                # Backend environment template
-│   └── model/                      # Packaged model weights, preprocessor, and metadata
-│
-├── dashboard/                      # Next.js 14 Web Application
-│   ├── package.json                # Frontend dependencies
-│   ├── next.config.js              # Next.js build and routing configuration
-│   └── app/                        # Next.js App Router
-│       ├── layout.js               # Root layout with metadata and fonts
-│       ├── page.js                 # Unified 5-tab dashboard view
-│       ├── globals.css             # Obsidian & slate glassmorphism design system
-│       └── api/                    # Server-side API proxies
-│           ├── metrics/route.js    # Metric retrieval proxy with local fallback
-│           ├── predict/route.js    # Batch inference proxy to remote backend
-│           └── sample-data/route.js# Built-in benign and attack telemetry presets
-│
-├── frontend/                       # Standalone Vercel deployment package
-│   ├── package.json                # Vercel deployment dependencies
-│   ├── .env.example                # Environment variable template
-│   └── app/                        # Self-contained frontend app router files
+│   ├── .env                        # Active backend environment configuration
+│   ├── model/                      # Packaged model weights, preprocessor, and metadata
+│   └── src/                        # Standalone ML inference, validation, and preprocessing modules
 │
 ├── src/                            # Modular Python Core Library
 │   ├── __init__.py                 # Python package declaration

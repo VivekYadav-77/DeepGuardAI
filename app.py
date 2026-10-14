@@ -4,7 +4,7 @@ DeepGuard AI — Dashboard Entrypoint
 Phase 7 Implementation
 
 This module serves as the primary Python entry point.
-- Modern Next.js Dashboard: Located in `dashboard/` (run with: `npm run dev` in dashboard/)
+- Modern Next.js Dashboard: Located in `frontend/` (run with: `npm run dev` in frontend/)
 - Python CLI / Streamlit Runner: Also supports `streamlit run app.py` for direct Python UI
 """
 
@@ -17,7 +17,7 @@ def run_streamlit_app():
     except ImportError:
         print("[DeepGuard AI] Streamlit is not installed in the current environment.")
         print("To launch the Next.js Web Dashboard (Recommended):")
-        print("  cd dashboard")
+        print("  cd frontend")
         print("  npm run dev")
         print("Then open: http://localhost:3000")
         return
@@ -36,7 +36,7 @@ def run_streamlit_app():
     st.title("DeepGuard AI — Network Intrusion Detection System")
     st.caption("Supervised Deep Learning Traffic Classification & Risk Analytics (NSL-KDD Benchmark)")
 
-    st.info("💡 **Next.js Web Dashboard is available!** Run `cd dashboard && npm run dev` to access the full Next.js UI at http://localhost:3000.")
+    st.info("💡 **Next.js Web Dashboard is available!** Run `cd frontend && npm run dev` to access the full Next.js UI at http://localhost:3000.")
 
     tab_overview, tab_analyzer, tab_perf, tab_threat, tab_info = st.tabs([
         "Overview", "Traffic Analyzer", "Model Performance", "Threat Analysis", "Model Information"
@@ -105,10 +105,10 @@ if __name__ == "__main__":
         run_streamlit_app()
     else:
         print("=================================================================")
-        print("  DeepGuard AI — Phase 7 Dashboard Launcher")
+        print("  DeepGuard AI — Launcher")
         print("=================================================================")
         print("1. Next.js Web Dashboard (Full-Featured Modern Frontend):")
-        print("     cd dashboard")
+        print("     cd frontend")
         print("     npm run dev")
         print("   URL: http://localhost:3000")
         print("")

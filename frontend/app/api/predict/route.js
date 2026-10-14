@@ -77,7 +77,7 @@ export async function POST(request) {
     }
 
     // Write temp CSV file
-    const tempDir = path.join(rootDir, 'dashboard', '.temp');
+    const tempDir = path.join(rootDir, 'frontend', '.temp');
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true });
     }

@@ -23,7 +23,9 @@ from src.api import (
     PredictRequest,
 )
 
-SAMPLE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dashboard", "public")
+SAMPLE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "public")
+if not os.path.exists(SAMPLE_DIR):
+    SAMPLE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dashboard", "public")
 
 
 @pytest.fixture
