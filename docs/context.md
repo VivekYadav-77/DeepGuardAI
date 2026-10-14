@@ -4,11 +4,11 @@
 
 ---
 
-## Project Status: IN PROGRESS — Milestone M2 (Phase 2 Complete)
+## Project Status: IN PROGRESS — Milestone M3 (Phase 5 Complete)
 
 **Last Updated:** 2026-10-14
-**Current Milestone:** M2 (Phase 0, 1, 2, 8 Complete -> Next: Phase 3 Model Training)
-**Current Phase:** Phase 2 (COMPLETE) -> Next: Phase 3 (Model Training)
+**Current Milestone:** M3 (Phases 0, 1, 2, 3, 4, 5, 8 Complete -> Next: Phase 6 Colab Notebook / Phase 7 Dashboard)
+**Current Phase:** Phase 5 (COMPLETE) -> Next: Phase 6 (Colab Notebook) / Phase 7 (Dashboard)
 **Blocker:** None
 
 ---
@@ -20,13 +20,13 @@
 | Phase 0 | Inspect & Plan | COMPLETE | 2026-10-14 | Verified Python 3.12.10, Windows 11, 421GB free disk on D:. |
 | Phase 1 | Dataset Selection | COMPLETE | 2026-10-14 | NSL-KDD selected. Direct URLs verified (HTTP 200). Binary mapping defined. |
 | Phase 2 | Data Preprocessing | COMPLETE | 2026-10-14 | src/preprocessing.py implemented, 41 features, StandardScaler + category encoding, artifacts exported, 9/9 pytest passed. |
-| Phase 3 | Model Training | NOT STARTED | — | — |
-| Phase 4 | Evaluation | NOT STARTED | — | — |
-| Phase 5 | Artifact Export | NOT STARTED | — | — |
-| Phase 6 | Colab Notebook | IN PROGRESS | — | DeepGuard_AI_Training.ipynb initialized with Phases 0-2 cells. |
+| Phase 3 | Model Training | COMPLETE | 2026-10-14 | DeepGuardMLP trained for 47 epochs (early stopping patience 10, best epoch 37, val loss 0.01526, val acc 99.50%), deepguard_model.pth, training_history.json, model_metadata.json saved. 18/18 pytest passed. |
+| Phase 4 | Evaluation | COMPLETE | 2026-10-14 | Logistic Regression baseline trained & saved. Both models evaluated on 18,896 held-out test samples. MLP: 99.52% acc, 99.52% F1, 0.9998 ROC-AUC vs Baseline: 95.30% acc, 95.27% F1, 0.9920 ROC-AUC. evaluation_metrics.json & confusion_matrix.png generated. 26/26 pytest passed. |
+| Phase 5 | Artifact Export | COMPLETE | 2026-10-14 | All 8 required artifacts + baseline verified in model/. src/export.py created with isolated fresh-load inference test. deepguard_artifacts.zip (100.9KB) packaged. tests/test_artifacts.py added (10/10 passed, 36/36 overall). |
+| Phase 6 | Colab Notebook | IN PROGRESS | — | DeepGuard_AI_Training.ipynb updated with Phases 0-5 cells (Sections 20-23 added). |
 | Phase 7 | Next.js Dashboard | NOT STARTED | — | — |
 | Phase 8 | Project Structure | COMPLETE | 2026-10-14 | Skeleton created (src, notebooks, model, reports, tests), requirements.txt, stubs, and pytest.ini configured. |
-| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py verified (9 passed). |
+| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py, test_model.py, test_evaluation.py, test_artifacts.py verified (36 passed). |
 | Phase 10 | Deployment | NOT STARTED | — | — |
 | Phase 11 | Academic Report | NOT STARTED | — | — |
 | Phase 12 | README | NOT STARTED | — | — |
@@ -57,41 +57,44 @@
 
 | Field | Value |
 |---|---|
-| Architecture | PyTorch MLP |
-| Input Features | TBD |
-| Hidden Layers | TBD |
-| Activation | TBD |
-| Output Layer | TBD |
-| Loss Function | TBD |
-| Optimizer | TBD |
-| Batch Size | TBD |
-| Epochs Trained | TBD |
-| Best Validation Metric | TBD |
-| Early Stopping | TBD |
+| Architecture | PyTorch MLP (`DeepGuardMLP`) |
+| Input Features | 41 |
+| Hidden Layers | [128, 64, 32] |
+| Activation | ReLU with BatchNorm1d and Dropout (0.3) |
+| Output Layer | Linear(32, 1) [single logit] |
+| Loss Function | BCEWithLogitsLoss |
+| Optimizer | Adam (lr=0.001) |
+| Batch Size | 256 |
+| Epochs Trained | 47 (Best Epoch: 37) |
+| Best Validation Metric | Val Loss: 0.01526 \| Val Acc: 99.50% |
+| Early Stopping | Triggered at Epoch 47 (patience=10) |
 
 ---
 
 ## Evaluation Results
 
-> Fill this in after Phase 4 is complete. Do NOT invent these values.
+> Values computed directly from actual execution on 18,896 held-out test samples.
 
 ### Neural Network (DeepGuard MLP)
 | Metric | Value |
 |---|---|
-| Accuracy | TBD |
-| Precision | TBD |
-| Recall | TBD |
-| F1-Score | TBD |
-| ROC-AUC | TBD |
+| Accuracy | 99.52% (0.99524) |
+| Precision (Macro) | 99.54% (0.99537) \| Benign: 99.36%, Attack: 99.71% |
+| Recall (Macro) | 99.51% (0.99507) \| Benign: 99.75%, Attack: 99.26% |
+| F1-Score (Macro) | 99.52% (0.99521) \| Benign: 99.56%, Attack: 99.49% |
+| ROC-AUC | 0.99983 |
+| Confusion Matrix | TN: 10,076 \| FP: 25 \| FN: 65 \| TP: 8,730 (Total: 18,896) |
 
-### Baseline Classifier
+### Baseline Classifier (Logistic Regression)
 | Metric | Value |
 |---|---|
-| Model Type | TBD |
-| Accuracy | TBD |
-| Precision | TBD |
-| Recall | TBD |
-| F1-Score | TBD |
+| Model Type | LogisticRegression (lbfgs, max_iter=1000, random_state=42) |
+| Accuracy | 95.30% (0.95295) |
+| Precision (Macro) | 95.35% (0.95353) \| Benign: 94.71%, Attack: 96.00% |
+| Recall (Macro) | 95.20% (0.95199) \| Benign: 96.59%, Attack: 93.80% |
+| F1-Score (Macro) | 95.27% (0.95265) \| Benign: 95.64%, Attack: 94.89% |
+| ROC-AUC | 0.99203 |
+| Confusion Matrix | TN: 9,757 \| FP: 344 \| FN: 545 \| TP: 8,250 (Total: 18,896) |
 
 ---
 
@@ -101,15 +104,17 @@
 
 | Artifact | Path | Status | Created On |
 |---|---|---|---|
-| deepguard_model.pth | model/deepguard_model.pth | NOT CREATED | — |
+| deepguard_model.pth | model/deepguard_model.pth | CREATED & VERIFIED | 2026-10-14 |
 | preprocessor.joblib | model/preprocessor.joblib | CREATED & VERIFIED | 2026-10-14 |
 | feature_schema.json | model/feature_schema.json | CREATED & VERIFIED | 2026-10-14 |
 | label_mapping.json | model/label_mapping.json | CREATED & VERIFIED | 2026-10-14 |
-| model_metadata.json | model/model_metadata.json | NOT CREATED | — |
-| evaluation_metrics.json | model/evaluation_metrics.json | NOT CREATED | — |
-| training_history.json | model/training_history.json | NOT CREATED | — |
-| confusion_matrix.png | model/confusion_matrix.png | NOT CREATED | — |
-| DeepGuard_AI_Training.ipynb | notebooks/ | CREATED (Phases 0-2) | 2026-10-14 |
+| model_metadata.json | model/model_metadata.json | CREATED & VERIFIED | 2026-10-14 |
+| baseline_model.joblib | model/baseline_model.joblib | CREATED & VERIFIED | 2026-10-14 |
+| evaluation_metrics.json | model/evaluation_metrics.json | CREATED & VERIFIED | 2026-10-14 |
+| training_history.json | model/training_history.json | CREATED & VERIFIED | 2026-10-14 |
+| confusion_matrix.png | model/confusion_matrix.png | CREATED & VERIFIED | 2026-10-14 |
+| DeepGuard_AI_Training.ipynb | notebooks/ | UPDATED (Phases 0-5) | 2026-10-14 |
+| deepguard_artifacts.zip | / | CREATED & VERIFIED | 2026-10-14 |
 | app.py | / | CREATED (stub) | 2026-10-14 |
 | requirements.txt | / | CREATED | 2026-10-14 |
 | README.md | / | NOT CREATED | — |
@@ -159,7 +164,27 @@
 | 2026-10-14 | model/label_mapping.json | Created | Phase 2 |
 | 2026-10-14 | pytest.ini | Created | Phase 9 |
 | 2026-10-14 | tests/test_preprocessing.py | Created | Phase 2 & 9 |
-| 2026-10-14 | docs/context.md | Modified | Phase 2 Complete |
+| 2026-10-14 | src/model.py | Implemented | Phase 3 |
+| 2026-10-14 | src/train.py | Created | Phase 3 |
+| 2026-10-14 | tests/test_model.py | Created | Phase 3 & 9 |
+| 2026-10-14 | model/deepguard_model.pth | Created & Verified | Phase 3 |
+| 2026-10-14 | model/training_history.json | Created & Verified | Phase 3 |
+| 2026-10-14 | model/model_metadata.json | Created & Verified | Phase 3 |
+| 2026-10-14 | notebooks/DeepGuard_AI_Training.ipynb | Modified (Phase 3 cells added) | Phase 3 & 6 |
+| 2026-10-14 | docs/context.md | Modified | Phase 3 Complete |
+| 2026-10-14 | src/evaluate.py | Created | Phase 4 |
+| 2026-10-14 | model/baseline_model.joblib | Created & Verified | Phase 4 |
+| 2026-10-14 | model/evaluation_metrics.json | Created & Verified | Phase 4 |
+| 2026-10-14 | model/confusion_matrix.png | Created & Verified | Phase 4 |
+| 2026-10-14 | tests/test_evaluation.py | Created (8 unit tests) | Phase 4 & 9 |
+| 2026-10-14 | notebooks/DeepGuard_AI_Training.ipynb | Modified (Phase 4 cells added) | Phase 4 & 6 |
+| 2026-10-14 | docs/context.md | Modified | Phase 4 Complete |
+| 2026-10-14 | src/export.py | Created | Phase 5 |
+| 2026-10-14 | deepguard_artifacts.zip | Created (100.9 KB) | Phase 5 |
+| 2026-10-14 | tests/test_artifacts.py | Created (10 unit tests) | Phase 5 & 9 |
+| 2026-10-14 | notebooks/DeepGuard_AI_Training.ipynb | Modified (Phase 5 cells added) | Phase 5 & 6 |
+| 2026-10-14 | docs/vivek.md | Modified (Phase 5 details added) | Phase 5 |
+| 2026-10-14 | docs/context.md | Modified | Phase 5 Complete |
 
 ---
 
@@ -186,6 +211,16 @@
 | 2026-10-14 | pip install pandas numpy scikit-learn joblib pytest | Successfully installed in .venv | Phase 2 / 8 |
 | 2026-10-14 | curl.exe -s -o data\KDDTrain+.txt & KDDTest+.txt | Datasets downloaded locally (19MB & 3.4MB) | Phase 2 |
 | 2026-10-14 | pytest tests/test_preprocessing.py -v | 9 passed in 3.23s | Phase 2 / 9 |
+| 2026-10-14 | pip install torch --index-url https://download.pytorch.org/whl/cpu | Successfully installed torch 2.14.1+cpu in .venv | Phase 3 |
+| 2026-10-14 | python -m src.train | Model trained (47 epochs, best val loss 0.01526 at epoch 37) | Phase 3 |
+| 2026-10-14 | pytest -v | 18 passed in 10.64s | Phase 3 / 9 |
+| 2026-10-14 | pip install matplotlib | Successfully installed matplotlib 3.11.2 | Phase 4 |
+| 2026-10-14 | python -m src.evaluate | Real evaluation completed (MLP: 99.52% acc vs Base: 95.30% acc) | Phase 4 |
+| 2026-10-14 | pytest tests/test_evaluation.py -v | 8 passed in 8.50s | Phase 4 / 9 |
+| 2026-10-14 | pytest -v | 26 passed in 13.97s across full test suite | Phase 4 / 9 |
+| 2026-10-14 | .venv\Scripts\python.exe -m src.export | All 8 required artifacts verified, fresh load tested, deepguard_artifacts.zip created | Phase 5 |
+| 2026-10-14 | pytest tests/test_artifacts.py -v | 10 passed in 6.61s | Phase 5 / 9 |
+| 2026-10-14 | pytest -v | 36 passed in 16.94s across full test suite | Phase 5 / 9 |
 
 ---
 
@@ -194,7 +229,7 @@
 | Item | Value |
 |---|---|
 | Python Version | Python 3.12.10 |
-| PyTorch Version | CPU-compatible PyTorch (to be configured in requirements.txt) |
+| PyTorch Version | 2.14.1+cpu |
 | Next.js Version | Next.js (Dashboard frontend) |
 | OS | Windows 11 (local) |
 | Colab GPU Available | Free tier (CPU or T4 GPU) |
@@ -211,3 +246,7 @@
 | 2026-10-14 | Project documentation initialized. All phase files, context.md, masterplan.md, and vivek.md created. Ready to begin Phase 0. |
 | 2026-10-14 | Completed Phase 0 (Environment inspection) & Phase 1 (NSL-KDD dataset selected, verified direct download URLs, updated context.md & vivek.md). |
 | 2026-10-14 | Completed Phase 2 (Data Preprocessing) & Phase 8 (Project Skeleton). Built src/preprocessing.py, notebooks/DeepGuard_AI_Training.ipynb, fitted artifacts in model/, and verified with 9/9 passing pytest unit tests. |
+| 2026-10-14 | Completed Phase 3 (Model Training). Implemented DeepGuardMLP in src/model.py, src/train.py, trained PyTorch model for 47 epochs (val loss 0.01526, val acc 99.50%), exported deepguard_model.pth, training_history.json, model_metadata.json, updated notebook, and verified with 18/18 passing pytest tests. |
+| 2026-10-14 | Completed Phase 4 (Baseline & Evaluation). Trained LogisticRegression baseline, evaluated MLP and baseline on 18,896 held-out test records, exported evaluation_metrics.json, baseline_model.joblib, and confusion_matrix.png. Added tests/test_evaluation.py (26/26 total tests passing). Updated notebook with Phase 4 evaluation pipeline & honest assessment. |
+| 2026-10-14 | Completed Phase 5 (Artifact Export). Created src/export.py, verified all 8 required model artifacts + baseline, validated schemas, performed isolated fresh-load inference test, packaged deepguard_artifacts.zip (100.9KB), updated DeepGuard_AI_Training.ipynb with Sections 20-23, created tests/test_artifacts.py (10/10 passed), and verified full test suite (36/36 passed). |
+

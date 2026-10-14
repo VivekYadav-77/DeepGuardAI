@@ -49,9 +49,25 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
     - Train: `https://raw.githubusercontent.com/jmnwong/NSL-KDD-Dataset/master/KDDTrain+.txt`
     - Test: `https://raw.githubusercontent.com/jmnwong/NSL-KDD-Dataset/master/KDDTest+.txt`
 - [x] **Phase 2 (Preprocessing) Complete:** `src/preprocessing.py`, `model/preprocessor.joblib`, `model/feature_schema.json`, and `model/label_mapping.json` generated and verified with 9 unit tests passing.
-- [ ] *(Optional)* Local backup datasets saved in `data/` folder.
+- [x] **Phase 3 (Model Training) Complete:** `DeepGuardMLP` defined in `src/model.py`, full training pipeline executed in `src/train.py`, best weights saved to `model/deepguard_model.pth` (best val loss 0.01526, val acc 99.50%), `model/training_history.json` and `model/model_metadata.json` generated. 18/18 pytest tests passing.
+- [x] **Phase 4 (Baseline & Evaluation) Complete:** Logistic Regression baseline trained & saved to `model/baseline_model.joblib`. Evaluated on 18,896 held-out test records: MLP achieved **99.52%** accuracy and **99.52%** F1 (0.9998 ROC-AUC) vs. Baseline **95.30%** accuracy and **95.27%** F1 (0.9920 ROC-AUC). `model/evaluation_metrics.json` and `model/confusion_matrix.png` exported. 26/26 pytest tests passing.
+- [x] **Phase 5 (Artifact Export & Verification) Complete:**
+  - All 8 required artifacts + 1 baseline model verified in `model/`:
+    - `model/deepguard_model.pth` (PyTorch MLP state dict, 74.6 KB)
+    - `model/preprocessor.joblib` (Fitted StandardScaler, 1.5 KB)
+    - `model/feature_schema.json` (41 features schema, 5.1 KB)
+    - `model/label_mapping.json` (0=Normal, 1=Attack, 104 bytes)
+    - `model/model_metadata.json` (Architecture & training config, 362 bytes)
+    - `model/evaluation_metrics.json` (Real test set metrics, 1.1 KB)
+    - `model/training_history.json` (Per-epoch loss trajectory, 2.7 KB)
+    - `model/confusion_matrix.png` (Side-by-side visualization, 37.9 KB)
+    - `model/baseline_model.joblib` (Logistic Regression baseline, 1.0 KB)
+  - Isolated fresh-load inference pipeline implemented and verified (`src/export.py`).
+  - Self-contained archive created: `deepguard_artifacts.zip` (100.9 KB).
+  - 10 automated unit tests added in `tests/test_artifacts.py` (36/36 tests passing across full suite).
+  - Training notebook `notebooks/DeepGuard_AI_Training.ipynb` updated with Phase 5 cells (Sections 20-23) for automated Colab verification and browser download.
 
-**Done?** Tell the AI agent: *"Phase 2 verified, proceed to Phase 3 (Model Training)"*
+**Done?** Tell the AI agent: *"Phase 5 complete, proceed to Phase 6 (Colab Notebook) or Phase 7 (Next.js Dashboard)"*
 
 ---
 

@@ -1,0 +1,63 @@
+{
+  "dataset": "NSL-KDD",
+  "test_size": 18896,
+  "mlp": {
+    "accuracy": 0.99524,
+    "precision_macro": 0.99537,
+    "recall_macro": 0.99507,
+    "f1_macro": 0.99521,
+    "roc_auc": 0.99983,
+    "confusion_matrix": [
+      [
+        10076,
+        25
+      ],
+      [
+        65,
+        8730
+      ]
+    ],
+    "per_class": {
+      "benign": {
+        "precision": 0.99359,
+        "recall": 0.99752,
+        "f1": 0.99555
+      },
+      "attack": {
+        "precision": 0.99714,
+        "recall": 0.99261,
+        "f1": 0.99487
+      }
+    }
+  },
+  "baseline": {
+    "model": "LogisticRegression",
+    "accuracy": 0.95295,
+    "precision_macro": 0.95353,
+    "recall_macro": 0.95199,
+    "f1_macro": 0.95265,
+    "roc_auc": 0.99203,
+    "confusion_matrix": [
+      [
+        9757,
+        344
+      ],
+      [
+        545,
+        8250
+      ]
+    ],
+    "per_class": {
+      "benign": {
+        "precision": 0.9471,
+        "recall": 0.96594,
+        "f1": 0.95643
+      },
+      "attack": {
+        "precision": 0.95997,
+        "recall": 0.93803,
+        "f1": 0.94888
+      }
+    }
+  }
+}
