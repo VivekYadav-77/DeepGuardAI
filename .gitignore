@@ -1,0 +1,72 @@
+# Python / Byte-compiled / Optimizations
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Environments
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Datasets & Local Raw Data
+data/
+*.csv
+*.tsv
+*.txt.gz
+*.parquet
+*.feather
+KDDTrain+.txt
+KDDTest+.txt
+
+# Large Model Binaries (Colab outputs / local weights)
+model/*.pth
+model/*.pt
+model/*.joblib
+model/*.pkl
+model/*.bin
+model/*.h5
+
+# Keep metadata/schema configs in git even inside model/
+!model/.gitkeep
+!model/feature_schema.json
+!model/label_mapping.json
+!model/model_metadata.json
+!model/evaluation_metrics.json
+!model/training_history.json
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets & Local Configs
+*.env
+*.env.local
+secrets.json
+credentials.json
+.streamlit/secrets.toml
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
