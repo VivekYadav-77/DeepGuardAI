@@ -37,6 +37,7 @@ REQUIRED_ARTIFACTS: List[str] = [
 # Supplementary artifacts created in the project
 OPTIONAL_ARTIFACTS: List[str] = [
     "baseline_model.joblib",
+    "training_curve.png",
 ]
 
 

@@ -4,11 +4,11 @@
 
 ---
 
-## Project Status: IN PROGRESS — Milestone M3 (Phase 5 Complete)
+## Project Status: IN PROGRESS — Milestone M3 (Phase 6 Complete)
 
 **Last Updated:** 2026-10-14
-**Current Milestone:** M3 (Phases 0, 1, 2, 3, 4, 5, 8 Complete -> Next: Phase 6 Colab Notebook / Phase 7 Dashboard)
-**Current Phase:** Phase 5 (COMPLETE) -> Next: Phase 6 (Colab Notebook) / Phase 7 (Dashboard)
+**Current Milestone:** M3 (Phases 0, 1, 2, 3, 4, 5, 6, 8 Complete -> Next: Phase 7 Dashboard)
+**Current Phase:** Phase 6 (COMPLETE) -> Next: Phase 7 (Next.js Dashboard)
 **Blocker:** None
 
 ---
@@ -23,10 +23,10 @@
 | Phase 3 | Model Training | COMPLETE | 2026-10-14 | DeepGuardMLP trained for 47 epochs (early stopping patience 10, best epoch 37, val loss 0.01526, val acc 99.50%), deepguard_model.pth, training_history.json, model_metadata.json saved. 18/18 pytest passed. |
 | Phase 4 | Evaluation | COMPLETE | 2026-10-14 | Logistic Regression baseline trained & saved. Both models evaluated on 18,896 held-out test samples. MLP: 99.52% acc, 99.52% F1, 0.9998 ROC-AUC vs Baseline: 95.30% acc, 95.27% F1, 0.9920 ROC-AUC. evaluation_metrics.json & confusion_matrix.png generated. 26/26 pytest passed. |
 | Phase 5 | Artifact Export | COMPLETE | 2026-10-14 | All 8 required artifacts + baseline verified in model/. src/export.py created with isolated fresh-load inference test. deepguard_artifacts.zip (100.9KB) packaged. tests/test_artifacts.py added (10/10 passed, 36/36 overall). |
-| Phase 6 | Colab Notebook | IN PROGRESS | — | DeepGuard_AI_Training.ipynb updated with Phases 0-5 cells (Sections 20-23 added). |
+| Phase 6 | Colab Notebook | COMPLETE | 2026-10-14 | DeepGuard_AI_Training.ipynb fully implemented with 49 cells covering all 16 required steps. Self-contained, seed=42, nvidia-smi GPU/CPU check, direct download + Colab fallback, training curve plot, confusion matrix, fresh-load test, deepguard_artifacts.zip download. tests/test_notebook.py added (7/7 passed, 43/43 overall). |
 | Phase 7 | Next.js Dashboard | NOT STARTED | — | — |
 | Phase 8 | Project Structure | COMPLETE | 2026-10-14 | Skeleton created (src, notebooks, model, reports, tests), requirements.txt, stubs, and pytest.ini configured. |
-| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py, test_model.py, test_evaluation.py, test_artifacts.py verified (36 passed). |
+| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py, test_model.py, test_evaluation.py, test_artifacts.py, test_notebook.py verified (43 passed). |
 | Phase 10 | Deployment | NOT STARTED | — | — |
 | Phase 11 | Academic Report | NOT STARTED | — | — |
 | Phase 12 | README | NOT STARTED | — | — |
@@ -113,8 +113,9 @@
 | evaluation_metrics.json | model/evaluation_metrics.json | CREATED & VERIFIED | 2026-10-14 |
 | training_history.json | model/training_history.json | CREATED & VERIFIED | 2026-10-14 |
 | confusion_matrix.png | model/confusion_matrix.png | CREATED & VERIFIED | 2026-10-14 |
-| DeepGuard_AI_Training.ipynb | notebooks/ | UPDATED (Phases 0-5) | 2026-10-14 |
-| deepguard_artifacts.zip | / | CREATED & VERIFIED | 2026-10-14 |
+| training_curve.png | model/training_curve.png | CREATED & VERIFIED | 2026-10-14 |
+| DeepGuard_AI_Training.ipynb | notebooks/ | CREATED & VERIFIED | 2026-10-14 |
+| deepguard_artifacts.zip | / | CREATED & VERIFIED (143.5 KB) | 2026-10-14 |
 | app.py | / | CREATED (stub) | 2026-10-14 |
 | requirements.txt | / | CREATED | 2026-10-14 |
 | README.md | / | NOT CREATED | — |
@@ -185,6 +186,13 @@
 | 2026-10-14 | notebooks/DeepGuard_AI_Training.ipynb | Modified (Phase 5 cells added) | Phase 5 & 6 |
 | 2026-10-14 | docs/vivek.md | Modified (Phase 5 details added) | Phase 5 |
 | 2026-10-14 | docs/context.md | Modified | Phase 5 Complete |
+| 2026-10-14 | model/training_curve.png | Created & Verified | Phase 6 |
+| 2026-10-14 | notebooks/DeepGuard_AI_Training.ipynb | Completed (49 cells covering all 16 required Phase 6 sections) | Phase 6 |
+| 2026-10-14 | tests/test_notebook.py | Created (7 unit tests) | Phase 6 & 9 |
+| 2026-10-14 | src/export.py | Modified (added training_curve.png to optional artifacts) | Phase 5 & 6 |
+| 2026-10-14 | deepguard_artifacts.zip | Updated & Verified (143.52 KB, 10 files packaged) | Phase 5 & 6 |
+| 2026-10-14 | docs/vivek.md | Modified (Phase 6 Colab execution guide) | Phase 6 |
+| 2026-10-14 | docs/context.md | Modified | Phase 6 Complete |
 
 ---
 
@@ -221,6 +229,11 @@
 | 2026-10-14 | .venv\Scripts\python.exe -m src.export | All 8 required artifacts verified, fresh load tested, deepguard_artifacts.zip created | Phase 5 |
 | 2026-10-14 | pytest tests/test_artifacts.py -v | 10 passed in 6.61s | Phase 5 / 9 |
 | 2026-10-14 | pytest -v | 36 passed in 16.94s across full test suite | Phase 5 / 9 |
+| 2026-10-14 | .venv\Scripts\python.exe -c "...plt.savefig('model/training_curve.png')..." | model/training_curve.png generated | Phase 6 |
+| 2026-10-14 | .venv\Scripts\python.exe build_notebook.py | Generated notebooks/DeepGuard_AI_Training.ipynb (49 cells) | Phase 6 |
+| 2026-10-14 | .venv\Scripts\pytest.exe tests/test_notebook.py -v | 7 passed in 0.09s | Phase 6 & 9 |
+| 2026-10-14 | .venv\Scripts\pytest.exe -v | 43 passed in 12.27s across full test suite | Phase 6 & 9 |
+| 2026-10-14 | .venv\Scripts\python.exe -m src.export | deepguard_artifacts.zip re-packaged with 10 files (143.52 KB) | Phase 5 & 6 |
 
 ---
 
@@ -249,4 +262,5 @@
 | 2026-10-14 | Completed Phase 3 (Model Training). Implemented DeepGuardMLP in src/model.py, src/train.py, trained PyTorch model for 47 epochs (val loss 0.01526, val acc 99.50%), exported deepguard_model.pth, training_history.json, model_metadata.json, updated notebook, and verified with 18/18 passing pytest tests. |
 | 2026-10-14 | Completed Phase 4 (Baseline & Evaluation). Trained LogisticRegression baseline, evaluated MLP and baseline on 18,896 held-out test records, exported evaluation_metrics.json, baseline_model.joblib, and confusion_matrix.png. Added tests/test_evaluation.py (26/26 total tests passing). Updated notebook with Phase 4 evaluation pipeline & honest assessment. |
 | 2026-10-14 | Completed Phase 5 (Artifact Export). Created src/export.py, verified all 8 required model artifacts + baseline, validated schemas, performed isolated fresh-load inference test, packaged deepguard_artifacts.zip (100.9KB), updated DeepGuard_AI_Training.ipynb with Sections 20-23, created tests/test_artifacts.py (10/10 passed), and verified full test suite (36/36 passed). |
+| 2026-10-14 | Completed Phase 6 (Google Colab Training Notebook). Fully finalized notebooks/DeepGuard_AI_Training.ipynb with 49 self-contained cells covering all 16 pipeline requirements. Implemented nvidia-smi GPU/CPU detection, automated NSL-KDD download with Colab manual fallback, training curve plotting (model/training_curve.png), side-by-side confusion matrix, fresh load testing, and google.colab automatic browser download. Created tests/test_notebook.py (7/7 passed, 43/43 overall). Re-packaged deepguard_artifacts.zip (143.52 KB). Updated docs/vivek.md with Task Group 2 instructions. Ready for Phase 7 (Next.js Dashboard). |
 

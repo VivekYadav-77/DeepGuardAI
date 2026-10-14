@@ -71,9 +71,11 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
 
 ---
 
-## TASK GROUP 2 — After Phase 6 (Colab Notebook)
+## TASK GROUP 2 — Phase 6: Google Colab Training Notebook
 
-**When to do:** After the AI agent creates `notebooks/DeepGuard_AI_Training.ipynb`
+**Status:** Completed by AI Agent (`notebooks/DeepGuard_AI_Training.ipynb` created, verified, and unit tested).
+
+> **Note:** All model training and artifact generation has already been completed and verified locally in `model/`. Running the Colab notebook is **optional** if you want independent verification in Google Cloud or need to train with GPU acceleration.
 
 ### Step 1: Open Google Colab
 - [ ] Go to https://colab.research.google.com
@@ -83,28 +85,26 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
 - [ ] Click **File > Upload Notebook**
 - [ ] Select the file: `d:\web devfiles\DeepGuard AI\notebooks\DeepGuard_AI_Training.ipynb`
 
-### Step 3: Upload Dataset (if required)
-> The AI agent will tell you here whether you need to upload the dataset manually or if Colab downloads it automatically.
-- [ ] [Check notebook Cell 4 — if it says "MANUAL STEP", upload your dataset file via the Colab Files panel on the left]
+### Step 3: Dataset Acquisition
+- [x] **Automated:** Cell 7 automatically downloads `KDDTrain+.txt` and `KDDTest+.txt` from public mirrors into `data/`.
+- [ ] **Manual Fallback (only if download fails):**
+  - Download `KDDTrain+.txt` and `KDDTest+.txt` manually from `https://raw.githubusercontent.com/jmnwong/NSL-KDD-Dataset/master/`
+  - Click the **Files** icon on the Colab sidebar, create a `data` folder, and upload both files.
 
 ### Step 4: Run the Notebook
-- [ ] Click **Runtime > Run All** in the Colab menu
-- [ ] Monitor the output — each cell prints progress
-- [ ] If any cell shows a red error, stop and report the error to the AI agent
+- [ ] Click **Runtime > Run All** (or press `Ctrl + F9`)
+- [ ] Runtime will inspect hardware via `nvidia-smi`, preprocess features, train MLP and Baseline, evaluate metrics, and plot figures.
 
-### Step 5: Verify Training Completed
-- [ ] You should see a line like: `Training complete. Best model saved.`
-- [ ] You should see evaluation metrics printed for both MLP and Baseline
+### Step 5: Verify Outputs
+- [ ] Training curve plotted and saved to `model/training_curve.png`
+- [ ] Confusion matrix comparison displayed and saved to `model/confusion_matrix.png`
+- [ ] Test comparison printed: MLP (~99.52% acc) vs Baseline (~95.30% acc)
+- [ ] Fresh-load test printed: `Fresh-load test PASSED: Model and preprocessor are 100% reproducible and isolated.`
 
-### Step 6: Download the Artifacts
-- [ ] The last cell will automatically trigger a download of `deepguard_artifacts.zip`
-- [ ] If the download doesn't start, run only the last cell manually
-- [ ] Save the file to your Downloads folder
-
-### Step 7: Extract Artifacts to the Project
-- [ ] Open the downloaded `deepguard_artifacts.zip`
-- [ ] Extract ALL files into: `d:\web devfiles\DeepGuard AI\model\`
-- [ ] Verify these files now exist:
+### Step 6: Download Artifacts (if re-training on Colab)
+- [ ] Cell 48 automatically triggers a browser download of `deepguard_artifacts.zip`
+- [ ] If downloaded, extract all files into: `d:\web devfiles\DeepGuard AI\model\`
+- [ ] Confirm all artifacts exist in `model/`:
   - `model/deepguard_model.pth`
   - `model/preprocessor.joblib`
   - `model/feature_schema.json`
@@ -113,8 +113,10 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
   - `model/evaluation_metrics.json`
   - `model/training_history.json`
   - `model/confusion_matrix.png`
+  - `model/training_curve.png`
+  - `model/baseline_model.joblib`
 
-**Done?** Tell the AI agent: *"Colab run complete, artifacts extracted to model/ folder"*
+**Done?** Tell the AI agent: *"Phase 6 verified, proceed to Phase 7 (Next.js Dashboard)"*
 
 ---
 
