@@ -15,18 +15,12 @@ app_port: 3000
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![PyTorch](https://img.shields.io/badge/Model-PyTorch%202.x-EE4C2C?style=flat&logo=pytorch)](https://pytorch.org)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python)](https://python.org)
-[![Tests](https://img.shields.io/badge/Tests-72%2F72%20Passed%20(100%25)-success?style=flat&logo=pytest)](file:///tests/)
+[![Tests](https://img.shields.io/badge/Tests-72%2F72%20Passed%20(100%25)-success?style=flat&logo=pytest)]
 [![Dataset](https://img.shields.io/badge/Dataset-NSL--KDD-blueviolet?style=flat)](https://www.unb.ca/cic/datasets/nsl.html)
 [![Accuracy](https://img.shields.io/badge/Test%20Accuracy-99.47%25-brightgreen?style=flat)]()
 [![ROC--AUC](https://img.shields.io/badge/ROC--AUC-0.9999-brightgreen?style=flat)]()
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](LICENSE)
 
-> 🎓 **B.Tech Academic Capstone Project**  
-> **Student Developer:** Vivek — `[FILL IN: Enrollment Number]`  
-> **Department:** Department of Computer Science & Engineering  
-> **Institution:** `[FILL IN: Institution Name]`  
-> **Supervisor / Guide:** `[FILL IN: Guide/Supervisor Name]`  
-> **Academic Year:** 2025–2026
 
 ---
 
@@ -58,7 +52,7 @@ app_port: 3000
 
 The platform provides a dual-interface architecture: a cloud-native **FastAPI REST API** serving high-throughput tensor inference and an interactive, glassmorphic **Next.js 14 Dashboard** enabling security analysts to upload bulk telemetry CSVs, visualize risk profiles, inspect confusion matrices, and evaluate threat probabilities in real time.
 
-> ⚠️ **Academic Disclaimer:** DeepGuard AI is an academic capstone prototype developed for educational, evaluation, and research purposes. It operates on static flow telemetry records and is **not** a raw packet sniffer or certified for deployment in live, mission-critical enterprise SOC/SIEM production environments.
+> 
 
 ---
 
@@ -186,96 +180,93 @@ The system is trained and benchmarked on the curated **NSL-KDD** dataset from th
 
 ```
 DeepGuard-AI/
-├── app.py                          # Unified CLI launcher & Streamlit compatibility entrypoint
-├── requirements.txt                # Full dependencies (training, evaluation, and backend API)
-├── README.md                       # Master project documentation and reproducibility guide
-├── .gitignore                      # Git exclusion rules for virtualenvs, caches, and raw data
-├── pytest.ini                      # Pytest test discovery configuration
-├── deepguard_artifacts.zip         # Portable standalone deployment bundle (143.5 KB)
+├── frontend/                        # Standalone Next.js 14 Frontend (Vercel deployment)
+│   ├── package.json                 # Frontend dependencies & scripts
+│   ├── next.config.js               # Next.js build & routing configuration
+│   ├── .env.example                 # Frontend environment template
+│   ├── .env.local                   # Local development config (http://localhost:8000)
+│   ├── .env.production              # Vercel production config
+│   ├── app/                         # Next.js App Router (pages, layout, glassmorphic styles)
+│   │   ├── layout.js                # Root layout with metadata and fonts
+│   │   ├── page.js                  # Unified 5-tab dashboard view
+│   │   ├── globals.css              # Obsidian & slate glassmorphism design system
+│   │   └── api/                     # Server-side API proxies
+│   │       ├── metrics/route.js     # Metric retrieval proxy with local fallback
+│   │       ├── predict/route.js     # Batch inference proxy to remote backend
+│   │       └── sample-data/route.js # Built-in benign and attack telemetry presets
+│   └── public/                      # Static sample CSVs, favicon & performance plots
 │
-├── frontend/                       # Standalone Next.js 14 Frontend (Vercel deployment)
-│   ├── package.json                # Frontend dependencies & scripts
-│   ├── next.config.js              # Next.js build & routing configuration
-│   ├── .env.example                # Frontend environment template
-│   ├── .env.local                  # Local development config (http://localhost:8000)
-│   ├── .env.production             # Vercel production config
-│   ├── app/                        # Next.js App Router (pages, layout, glassmorphic styles)
-│   │   ├── layout.js               # Root layout with metadata and fonts
-│   │   ├── page.js                 # Unified 5-tab dashboard view
-│   │   ├── globals.css             # Obsidian & slate glassmorphism design system
-│   │   └── api/                    # Server-side API proxies
-│   │       ├── metrics/route.js    # Metric retrieval proxy with local fallback
-│   │       ├── predict/route.js    # Batch inference proxy to remote backend
-│   │       └── sample-data/route.js# Built-in benign and attack telemetry presets
-│   └── public/                     # Static sample CSVs, favicon & performance plots
+├── backend/                         # Standalone FastAPI & ML Engine (Render deployment)
+│   ├── main.py                      # Production FastAPI entrypoint (Render Web Service)
+│   ├── app.py                       # CLI launcher & fallback runner
+│   ├── requirements.txt             # CPU-optimized PyTorch & FastAPI dependencies
+│   ├── render.yaml                  # Render Infrastructure-as-Code Blueprint
+│   ├── pytest.ini                   # Backend-scoped pytest configuration
+│   ├── .env.example                 # Backend environment template
+│   ├── .env                         # Active backend environment configuration
+│   ├── model/                       # Exported ML & Preprocessor Artifacts (10 files)
+│   │   ├── deepguard_model.pth      # Serialized PyTorch state_dict (74.6 KB)
+│   │   ├── preprocessor.joblib      # Fitted StandardScaler & categorical index dicts
+│   │   ├── feature_schema.json      # 41-feature schema with ordered column names
+│   │   ├── label_mapping.json       # Binary label mappings: {"0": "Benign", "1": "Attack"}
+│   │   ├── model_metadata.json      # Hyperparameters, architecture, and training info
+│   │   ├── evaluation_metrics.json  # Empirical metrics for MLP and Baseline
+│   │   ├── training_history.json    # Epoch loss & accuracy progression
+│   │   ├── baseline_model.joblib    # Fitted Logistic Regression baseline model
+│   │   ├── confusion_matrix.png     # Evaluated test set confusion matrix plot
+│   │   └── training_curve.png       # Train vs validation loss & accuracy curves
+│   ├── src/                         # Modular Python ML Core Library
+│   │   ├── __init__.py              # Python package declaration
+│   │   ├── model.py                 # PyTorch DeepGuardMLP architecture definition
+│   │   ├── preprocessing.py         # NSL-KDD data transformation & scaling
+│   │   ├── train.py                 # PyTorch training loop with early stopping
+│   │   ├── evaluate.py              # Evaluation pipeline & baseline model
+│   │   ├── export.py                # Artifact packaging & zip bundling
+│   │   ├── inference.py             # Single-sample and batch PyTorch inference engine
+│   │   ├── validation.py            # Input CSV validation & safety limits
+│   │   └── api.py                   # FastAPI REST service (/health, /metrics, /predict)
+│   └── tests/                       # Automated Pytest Suite (73 Unit Tests)
+│       ├── conftest.py              # Test environment & path configuration
+│       ├── test_preprocessing.py    # Preprocessor scaling, encoding & OOV tests
+│       ├── test_model.py            # PyTorch MLP shapes, gradients & loss checks
+│       ├── test_evaluation.py       # Metric calculations, confusion matrix & baseline
+│       ├── test_artifacts.py        # Artifact integrity, schemas & fresh-load test
+│       ├── test_notebook.py         # Colab notebook cell syntax & reproducibility
+│       ├── test_structure.py        # Monorepo layout, stubs & file existence
+│       ├── test_inference.py        # Single/batch inference bounds & output shapes
+│       ├── test_validation.py       # CSV payload validation & safety limits
+│       └── test_api.py              # FastAPI REST endpoint integration tests
 │
-├── backend/                        # Standalone FastAPI Backend (Render deployment)
-│   ├── main.py                     # Independent FastAPI application entrypoint
-│   ├── requirements.txt            # Render backend dependencies (CPU PyTorch wheel)
-│   ├── render.yaml                 # Backend blueprint for Render Web Service
-│   ├── .env.example                # Backend environment template
-│   ├── .env                        # Active backend environment configuration
-│   ├── model/                      # Packaged model weights, preprocessor, and metadata
-│   └── src/                        # Standalone ML inference, validation, and preprocessing modules
+├── notebooks/                       # Google Colab Training Notebooks
+│   └── DeepGuard_AI_Training.ipynb  # 49-cell reproducible notebook covering all phases
 │
-├── src/                            # Modular Python Core Library
-│   ├── __init__.py                 # Python package declaration
-│   ├── model.py                    # PyTorch DeepGuardMLP architecture definition
-│   ├── preprocessing.py            # NSL-KDD data transformation, scaling, and encoding
-│   ├── train.py                    # PyTorch training loop with early stopping
-│   ├── evaluate.py                 # Evaluation pipeline, baseline model, and metric export
-│   ├── export.py                   # Artifact packaging, validation, and zip bundling
-│   ├── inference.py                # Single-sample and batch PyTorch inference engine
-│   ├── validation.py               # Input CSV validation, schema pruning, and safety checks
-│   └── api.py                      # FastAPI REST service (/health, /metrics, /predict)
+├── reports/                         # Academic Deliverables & Defense Prep
+│   ├── project_report.md            # Formal academic capstone report (20 sections)
+│   ├── presentation_outline.md      # 12-slide presentation structure with speaker notes
+│   └── viva_questions.md            # 17 comprehensive viva defense questions & answers
 │
-├── notebooks/                      # Google Colab Training Notebooks
-│   └── DeepGuard_AI_Training.ipynb # 49-cell reproducible notebook covering all 16 phases
+├── docs/                            # Architectural Specifications & Progress Logs
+│   ├── masterplan.md                # Master project plan and technical constraints
+│   ├── context.md                   # Live progress tracker and empirical metric registry
+│   ├── vivek.md                     # Developer task delegation log
+│   ├── phase1_dataset.md            # Phase 1 dataset selection specification
+│   ├── phase2_preprocessing.md      # Phase 2 preprocessing specification
+│   ├── phase3_training.md           # Phase 3 training loop specification
+│   ├── phase4_evaluation.md         # Phase 4 evaluation specification
+│   ├── phase5_artifacts.md          # Phase 5 artifact export specification
+│   ├── phase6_notebook.md           # Phase 6 Google Colab notebook specification
+│   ├── phase7_dashboard.md          # Phase 7 Next.js dashboard specification
+│   ├── phase8_structure.md          # Phase 8 project structure specification
+│   ├── phase9_testing.md            # Phase 9 quality assurance specification
+│   ├── phase10_deployment.md        # Phase 10 cloud deployment specification
+│   ├── phase11_report.md            # Phase 11 academic documentation specification
+│   └── phase12_readme.md            # Phase 12 README and reproducibility specification
 │
-├── model/                          # Exported ML & Preprocessor Artifacts
-│   ├── deepguard_model.pth         # Serialized PyTorch state_dict (74.6 KB)
-│   ├── preprocessor.joblib         # Fitted StandardScaler and categorical index dictionaries
-│   ├── feature_schema.json         # Complete 41-feature schema with ordered column names
-│   ├── label_mapping.json          # Binary label mappings: {"0": "Benign", "1": "Attack"}
-│   ├── model_metadata.json         # Hyperparameters, architecture specifications, and training run info
-│   ├── evaluation_metrics.json     # Empirical evaluation metrics for MLP and Baseline
-│   ├── training_history.json       # Epoch-by-epoch loss and accuracy progression
-│   ├── baseline_model.joblib       # Fitted Logistic Regression baseline model
-│   ├── confusion_matrix.png        # Evaluated test set confusion matrix visualization
-│   └── training_curve.png          # Train vs. validation loss and accuracy curves
-│
-├── reports/                        # Academic Deliverables & Defense Prep
-│   ├── project_report.md           # Formal academic capstone report (20 sections)
-│   ├── presentation_outline.md     # 12-slide presentation structure with speaker notes
-│   └── viva_questions.md           # 17 comprehensive viva defense questions & answers
-│
-├── tests/                          # Automated Pytest Suite (72 Unit Tests)
-│   ├── test_preprocessing.py       # Preprocessor scaling, encoding, and OOV tests (9 tests)
-│   ├── test_model.py               # PyTorch MLP shapes, gradients, and loss checks (9 tests)
-│   ├── test_evaluation.py          # Metric calculations, confusion matrix, and baseline (8 tests)
-│   ├── test_artifacts.py           # Artifact integrity, schemas, and fresh-load test (10 tests)
-│   ├── test_notebook.py            # Colab notebook cell syntax and reproducibility (7 tests)
-│   ├── test_structure.py           # Project layout, stubs, and file existence (8 tests)
-│   ├── test_inference.py           # Single/batch inference bounds and outputs (6 tests)
-│   ├── test_validation.py          # CSV payload validation and safety limits (6 tests)
-│   └── test_api.py                 # FastAPI REST endpoint integration tests (9 tests)
-│
-└── docs/                           # Architectural Specifications & Progress Logs
-    ├── masterplan.md               # Master project plan and technical constraints
-    ├── context.md                  # Live progress tracker and empirical metric registry
-    ├── vivek.md                    # Developer task delegation log
-    ├── phase1_dataset.md           # Phase 1 dataset selection specification
-    ├── phase2_preprocessing.md     # Phase 2 preprocessing specification
-    ├── phase3_training.md          # Phase 3 training loop specification
-    ├── phase4_evaluation.md        # Phase 4 evaluation specification
-    ├── phase5_artifacts.md         # Phase 5 artifact export specification
-    ├── phase6_notebook.md          # Phase 6 Google Colab notebook specification
-    ├── phase7_dashboard.md         # Phase 7 Next.js dashboard specification
-    ├── phase8_structure.md         # Phase 8 project structure specification
-    ├── phase9_testing.md           # Phase 9 quality assurance specification
-    ├── phase10_deployment.md       # Phase 10 cloud deployment specification
-    ├── phase11_report.md           # Phase 11 academic documentation specification
-    └── phase12_readme.md           # Phase 12 README and reproducibility specification
+├── README.md                        # Master project documentation and reproducibility guide
+├── LICENSE                          # MIT License
+├── pytest.ini                       # Root pytest discovery configuration
+├── .gitignore                       # Git exclusion rules for virtualenvs, caches, raw data
+└── deepguard_artifacts.zip          # Portable standalone deployment bundle (143.5 KB)
 ```
 
 ---
@@ -306,9 +297,9 @@ python -m venv .venv
 # On Linux / macOS (Bash):
 # source .venv/bin/activate
 
-# 3. Upgrade pip and install core dependencies
+# 3. Upgrade pip and install backend dependencies
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 ```
 
 ---
@@ -331,20 +322,21 @@ The entire data ingestion, preprocessing, training, evaluation, and artifact bun
    - Generates `confusion_matrix.png`, `training_curve.png`, and `evaluation_metrics.json`.
    - Packages all 10 core model artifacts into `deepguard_artifacts.zip`.
    - Triggers an automated browser download of the zip file.
-6. Extract the downloaded `deepguard_artifacts.zip` into the `model/` directory of your local repository.
+6. Extract the downloaded `deepguard_artifacts.zip` into the `backend/model/` directory of your local repository.
 
 ---
 
 ## 9. Running the Application
 
-DeepGuard AI can be run in two modes: **Full Decoupled Architecture** (FastAPI backend + Next.js frontend) or **Single-Command Unified Entrypoint**.
+DeepGuard AI is designed as a high-performance decoupled monorepo: an asynchronous **FastAPI backend** and a glassmorphic **Next.js 14 frontend**.
 
-### Option A: Running Decoupled Architecture (Recommended)
+### Running Locally (Decoupled Mode)
 
 #### Terminal 1 — Start FastAPI Backend:
 ```powershell
 # From project root in your activated virtual environment:
-python app.py --api
+cd backend
+python main.py
 # Or via uvicorn directly:
 # uvicorn src.api:app --reload --port 8000
 ```
@@ -355,7 +347,7 @@ python app.py --api
 #### Terminal 2 — Start Next.js Dashboard:
 ```powershell
 # From project root:
-cd dashboard
+cd frontend
 npm install
 npm run dev
 ```
@@ -363,10 +355,10 @@ npm run dev
 
 ---
 
-### Option B: Production Next.js Build
+### Production Next.js Build
 
 ```powershell
-cd dashboard
+cd frontend
 npm run build
 npm start
 ```
@@ -376,28 +368,32 @@ The optimized production build compiles all static assets, dynamic API routes, a
 
 ## 10. Automated Testing Suite
 
-DeepGuard AI includes a 72-test automated unit and integration suite using `pytest`. The test suite validates data preprocessing, mathematical bounds, tensor shapes, gradient flow, out-of-vocabulary fallback, artifact serialization, and REST API integrity.
+DeepGuard AI includes a 73-test automated unit and integration suite using `pytest`. The test suite validates data preprocessing, mathematical bounds, tensor shapes, gradient flow, out-of-vocabulary fallback, artifact serialization, monorepo directory layout, and REST API integrity.
 
 ### Run All Tests:
 ```powershell
 # From project root:
-pytest tests/ -v
+pytest -v
+
+# Or from backend directory:
+cd backend
+pytest -v
 ```
 
 ### Test Suite Breakdown:
 
 | Test Suite File | Focus Area | Tests | Status |
 |---|---|:---:|:---:|
-| `tests/test_preprocessing.py` | Scaler loading, schema conformity, label encoding, NaN/Inf checks, out-of-vocabulary handling | 9 | **9 PASSED** |
-| `tests/test_model.py` | PyTorch initialization, forward pass dimensions, gradient propagation, DataLoader batching, state_dict persistence | 9 | **9 PASSED** |
-| `tests/test_evaluation.py` | Accuracy, Precision, Recall, F1, ROC-AUC calculations, confusion matrix plotting, baseline comparison | 8 | **8 PASSED** |
-| `tests/test_artifacts.py` | Existence of all 10 artifacts, schema validation, isolated fresh-load inference, zip extraction | 10 | **10 PASSED** |
-| `tests/test_notebook.py` | Colab notebook cell syntax, mandatory 16-phase sections, GPU/CPU awareness, zero hardcoded paths | 7 | **7 PASSED** |
-| `tests/test_structure.py` | Repository skeleton, module exports, requirements, .gitignore rules, report stubs | 8 | **8 PASSED** |
-| `tests/test_inference.py` | Single and batch inference tensor shapes, output range [0, 1], predicted class validity | 6 | **6 PASSED** |
-| `tests/test_validation.py` | CSV validation, missing column rejection, empty file rejection, extra column pruning, 50k row limit | 6 | **6 PASSED** |
-| `tests/test_api.py` | FastAPI `/health`, `/metrics`, `/predict` (CSV & JSON payloads), invalid input rejection, model visualization | 9 | **9 PASSED** |
-| **Total** | **Comprehensive Quality Assurance Suite** | **72** | **72 PASSED (100%)** |
+| `backend/tests/test_preprocessing.py` | Scaler loading, schema conformity, label encoding, NaN/Inf checks, out-of-vocabulary handling | 9 | **9 PASSED** |
+| `backend/tests/test_model.py` | PyTorch initialization, forward pass dimensions, gradient propagation, DataLoader batching, state_dict persistence | 9 | **9 PASSED** |
+| `backend/tests/test_evaluation.py` | Accuracy, Precision, Recall, F1, ROC-AUC calculations, confusion matrix plotting, baseline comparison | 8 | **8 PASSED** |
+| `backend/tests/test_artifacts.py` | Existence of all 10 artifacts, schema validation, isolated fresh-load inference, zip extraction | 10 | **10 PASSED** |
+| `backend/tests/test_notebook.py` | Colab notebook cell syntax, mandatory 16-phase sections, GPU/CPU awareness, zero hardcoded paths | 7 | **7 PASSED** |
+| `backend/tests/test_structure.py` | Monorepo layout, stub & file existence, docs conformity, gitignore rules | 9 | **9 PASSED** |
+| `backend/tests/test_inference.py` | Single and batch inference tensor shapes, output range [0, 1], predicted class validity | 6 | **6 PASSED** |
+| `backend/tests/test_validation.py` | CSV payload validation, missing column rejection, empty file rejection, extra column pruning, 50k row limit | 6 | **6 PASSED** |
+| `backend/tests/test_api.py` | FastAPI `/health`, `/metrics`, `/predict` (CSV & JSON payloads), invalid input rejection, model visualization | 9 | **9 PASSED** |
+| **Total** | **Comprehensive Quality Assurance Suite** | **73** | **73 PASSED (100%)** |
 
 ---
 

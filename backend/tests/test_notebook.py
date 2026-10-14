@@ -12,7 +12,10 @@ import pytest
 
 @pytest.fixture(scope="module")
 def notebook_data():
-    nb_path = "notebooks/DeepGuard_AI_Training.ipynb"
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    nb_path = os.path.join(project_root, "notebooks", "DeepGuard_AI_Training.ipynb")
+    if not os.path.exists(nb_path):
+        nb_path = "notebooks/DeepGuard_AI_Training.ipynb"
     assert os.path.exists(nb_path), f"Notebook file not found at {nb_path}"
     with open(nb_path, "r", encoding="utf-8") as f:
         nb = json.load(f)

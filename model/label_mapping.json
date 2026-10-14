@@ -1,5 +1,0 @@
-{
-  "normal": 0,
-  "attack": 1,
-  "mapping_description": "0 = Benign/Normal, 1 = Attack/Malicious"
-}
