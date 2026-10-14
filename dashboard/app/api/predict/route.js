@@ -7,9 +7,33 @@ export async function POST(request) {
   let tempCsvPath = null;
   try {
     const body = await request.json();
+    const backendUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
+
+    // 1. If backend URL is configured (e.g. Render Web Service), forward directly to FastAPI
+    if (backendUrl) {
+      try {
+        const cleanUrl = backendUrl.replace(/\/$/, '');
+        const res = await fetch(`${cleanUrl}/predict`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+
+        const data = await res.json();
+        return NextResponse.json(data, { status: res.status });
+      } catch (remoteErr) {
+        console.warn(`[DeepGuard API] Failed to reach remote backend (${backendUrl}):`, remoteErr.message);
+        // Fall back to local execution if running in local environment
+      }
+    }
+
+    // 2. Local execution via child_process (for offline local development)
     const rootDir = path.resolve(process.cwd(), '..');
 
-    // Determine python executable: prefer .venv/Scripts/python.exe
+    // Determine python executable: prefer .venv
     let pythonExecutable = 'python';
     const venvPythonWin = path.join(rootDir, '.venv', 'Scripts', 'python.exe');
     const venvPythonUnix = path.join(rootDir, '.venv', 'bin', 'python');
@@ -18,6 +42,15 @@ export async function POST(request) {
       pythonExecutable = venvPythonWin;
     } else if (fs.existsSync(venvPythonUnix)) {
       pythonExecutable = venvPythonUnix;
+    } else if (!fs.existsSync(path.join(rootDir, 'model'))) {
+      // Running on Vercel without local Python or model folder
+      return NextResponse.json(
+        {
+          success: false,
+          error: `DeepGuard backend is unreachable. If deployed to Render, the container may be waking up from sleep (cold start ~30-50s). Please verify BACKEND_URL in Vercel settings: ${backendUrl || 'NOT SET'}.`,
+        },
+        { status: 503 }
+      );
     }
 
     let csvContent = '';
@@ -77,7 +110,6 @@ export async function POST(request) {
       pyProcess.on('close', (code) => {
         if (code === 0) {
           try {
-            // Find valid JSON in stdout
             const jsonStart = stdout.indexOf('{');
             const jsonEnd = stdout.lastIndexOf('}');
             if (jsonStart !== -1 && jsonEnd !== -1) {

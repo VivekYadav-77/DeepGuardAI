@@ -4,11 +4,11 @@
 
 ---
 
-## Project Status: IN PROGRESS — Milestone M5 (Phases 0–9 Complete)
+## Project Status: IN PROGRESS — Milestone M5/M6 (Phase 10 Deployment Preparation Complete)
 
 **Last Updated:** 2026-10-14
-**Current Milestone:** M5 (Phases 0–9 Complete -> Next: Phase 10 Deployment)
-**Current Phase:** Phase 9 (COMPLETE) -> Next: Phase 10 (Deployment)
+**Current Milestone:** M5/M6 (Phase 10 Deployment Configuration Complete -> Waiting for Vivek to push to GitHub & deploy on Vercel + Render)
+**Current Phase:** Phase 10 (Deployment)
 **Blocker:** None
 
 ---
@@ -25,21 +25,21 @@
 | Phase 5 | Artifact Export | COMPLETE | 2026-10-14 | All 8 required artifacts + baseline verified in model/. src/export.py created with isolated fresh-load inference test. deepguard_artifacts.zip (100.9KB) packaged. tests/test_artifacts.py added (10/10 passed, 36/36 overall). |
 | Phase 7 | Next.js Dashboard | COMPLETE | 2026-10-14 | Built Next.js web application with 5 tabs, custom CSS dark/light theme, 3-color palette, Inter/JetBrains Mono fonts, src/validation.py, src/inference.py, app.py, and 12/12 new unit tests (55/55 overall). |
 | Phase 8 | Project Structure | COMPLETE | 2026-10-14 | Full directory skeleton verified (src, notebooks, model, reports, tests, docs), requirements.txt, .gitignore, stubs, and tests/test_structure.py created (8/8 passed). |
-| Phase 9 | Testing & QA | COMPLETE | 2026-10-14 | All 63 pytest unit tests passing in 55.70s across 8 test suites (preprocessing, inference, validation, model, evaluation, artifacts, notebook, structure). Dashboard startup verified (HTTP 200 OK). |
-| Phase 10 | Deployment | NOT STARTED | — | — |
+| Phase 9 | Testing & QA | COMPLETE | 2026-10-14 | All 63 pytest unit tests passing in 55.70s across 8 test suites. Dashboard startup verified (HTTP 200 OK). |
+| Phase 10 | Deployment | PREPARED | 2026-10-14 | Architected decoupled deployment: Next.js frontend for Vercel, FastAPI backend (src/api.py) for Render (Free Tier). Created render.yaml, requirements-render.txt (PyTorch CPU wheel), tests/test_api.py (9/9 passed, 72/72 total tests). Next.js production build verified. Detailed instructions written in docs/vivek.md. |
 | Phase 11 | Academic Report | NOT STARTED | — | — |
 | Phase 12 | README | NOT STARTED | — | — |
 
 ---
 
-## Quality Assurance & Test Results (Phase 9)
+## Quality Assurance & Test Results (Phase 10)
 
 **Execution Command:** `.venv\Scripts\pytest.exe -v`  
-**Total Tests:** 63  
-**Passed:** 63 (100%)  
+**Total Tests:** 72  
+**Passed:** 72 (100%)  
 **Failed:** 0  
 **Skipped:** 0  
-**Duration:** 55.70s  
+**Duration:** 41.59s  
 
 ### Suite Breakdown
 | Test Suite | Purpose | Tests | Status |
@@ -52,6 +52,7 @@
 | `tests/test_artifacts.py` | Integrity of all 8 core artifacts + baseline, metadata schemas, zip compression & fresh load inference | 10 | 10 PASSED |
 | `tests/test_notebook.py` | Colab notebook structure, 16 mandatory sections, syntax correctness, CPU/GPU awareness, no hardcoded local paths | 7 | 7 PASSED |
 | `tests/test_structure.py` | Repository layout, package stubs, documentation completeness, requirements.txt, .gitignore rules | 8 | 8 PASSED |
+| `tests/test_api.py` | FastAPI REST endpoints (/health, /metrics, /predict with CSV and JSON records, empty/invalid payload handling, image serving) | 9 | 9 PASSED |
 
 ### Web Dashboard Verification
 - **Status:** ACTIVE & RESPONSIVE
@@ -238,7 +239,15 @@
 | 2026-10-14 | docs/phase8_structure.md | Modified (all checklist items marked complete) | Phase 8 |
 | 2026-10-14 | tests/test_structure.py | Created (8 unit tests for directory layout & stubs) | Phase 8 & 9 |
 | 2026-10-14 | docs/phase9_testing.md | Modified (all checklist items marked complete) | Phase 9 |
-| 2026-10-14 | docs/context.md | Modified (Phase 9 Complete) | Phase 9 |
+| 2026-10-14 | src/api.py | Created (FastAPI REST service for Render deployment) | Phase 10 |
+| 2026-10-14 | requirements-render.txt | Created (CPU-only PyTorch wheel specification) | Phase 10 |
+| 2026-10-14 | render.yaml | Created (Blueprint spec for Render free Web Service) | Phase 10 |
+| 2026-10-14 | tests/test_api.py | Created (9 unit tests for REST endpoints, 72/72 passing) | Phase 10 |
+| 2026-10-14 | dashboard/app/api/metrics/route.js | Modified (remote backend proxy + local fallback) | Phase 10 |
+| 2026-10-14 | dashboard/app/api/predict/route.js | Modified (remote backend proxy + local fallback) | Phase 10 |
+| 2026-10-14 | docs/phase10_deployment.md | Modified (rewritten for Vercel + Render architecture) | Phase 10 |
+| 2026-10-14 | docs/vivek.md | Modified (Task Group 5 updated for Vercel + Render) | Phase 10 |
+| 2026-10-14 | docs/context.md | Modified (Phase 10 deployment preparation) | Phase 10 |
 
 ---
 

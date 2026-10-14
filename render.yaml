@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: deepguard-ai-api
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install --no-cache-dir -r requirements-render.txt
+    startCommand: uvicorn src.api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: PYTHONIOENCODING
+        value: utf-8

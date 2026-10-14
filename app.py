@@ -112,6 +112,17 @@ if __name__ == "__main__":
         print("     npm run dev")
         print("   URL: http://localhost:3000")
         print("")
-        print("2. Python Test Suite:")
+        print("2. Launch FastAPI REST Backend (for Render or local API):")
+        print("     python app.py --api")
+        print("     OR: uvicorn src.api:app --reload --port 8000")
+        print("   Docs: http://localhost:8000/docs")
+        print("")
+        print("3. Python Test Suite:")
         print("     pytest tests/ -v")
         print("=================================================================")
+
+    if "--api" in sys.argv:
+        import uvicorn
+        port = int(os.environ.get("PORT", 8000))
+        print(f"[DeepGuard AI] Launching FastAPI backend on port {port}...")
+        uvicorn.run("src.api:app", host="0.0.0.0", port=port, reload=False)

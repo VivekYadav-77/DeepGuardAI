@@ -165,53 +165,75 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
 
 ---
 
-## TASK GROUP 5 — After Phase 10 (Deployment)
+## TASK GROUP 5 — Phase 10: Vercel & Render Deployment
 
-**When to do:** After the AI agent prepares the deployment files and tells you to deploy
+**When to do:** Now that the AI agent has prepared `src/api.py`, `render.yaml`, `requirements-render.txt`, and the Next.js production build.
 
-### Create Your Hugging Face Space
-- [ ] Go to https://huggingface.co and sign in
-- [ ] Click your profile > **New Space**
-- [ ] Fill in:
-  - Space name: `deepguard-ai`
-  - License: MIT
-  - **Space SDK: Next.js** (important!)
-  - Visibility: **Public**
-- [ ] Click **Create Space**
+### Part 1: Push Code to GitHub
+- [ ] Open PowerShell or terminal in `d:\web devfiles\DeepGuard AI`
+- [ ] Check git status and commit all changes:
+  ```bash
+  git add .
+  git commit -m "Configure Vercel frontend and Render backend deployment"
+  git push origin main
+  ```
 
-### Get Your Access Token
-- [ ] Go to: https://huggingface.co/settings/tokens
-- [ ] Click **New Token**
-- [ ] Name it anything (e.g., `deepguard-deploy`)
-- [ ] Role: **Write**
-- [ ] Copy the token (starts with `hf_...`) — keep it private, never share it
+---
 
-### Upload Project Files
-**Option A — Web Interface (easier):**
-- [ ] Go to your Space page
-- [ ] Click the **Files and Versions** tab
-- [ ] Click **Upload files** button
-- [ ] Select all files from: `d:\web devfiles\DeepGuard AI\`
-  - Upload: `app.py`, `requirements.txt`, `README.md`, the `src/` folder, the `model/` folder
+### Part 2: Deploy Backend on Render (Free Web Service)
+- [ ] Go to https://dashboard.render.com and sign in with GitHub
+- [ ] Click **New +** (top right) and select **Web Service**
+- [ ] Click **Build and deploy from a Git repository** and connect your `DeepGuard AI` repo
+- [ ] Configure the settings:
+  - **Name:** `deepguard-ai-api`
+  - **Region:** Any region (e.g., *Oregon (US West)* or *Frankfurt*)
+  - **Branch:** `main`
+  - **Root Directory:** *(leave blank / repo root)*
+  - **Runtime:** `Python 3`
+  - **Build Command:**
+    ```bash
+    pip install --no-cache-dir -r requirements-render.txt
+    ```
+  - **Start Command:**
+    ```bash
+    uvicorn src.api:app --host 0.0.0.0 --port $PORT
+    ```
+  - **Instance Type:** `Free` (512 MB RAM, 0.1 CPU)
+- [ ] Under **Environment Variables**, add:
+  - `PYTHON_VERSION` = `3.12.0`
+  - `PYTHONIOENCODING` = `utf-8`
+- [ ] Click **Deploy Web Service**
+- [ ] Wait 2–3 minutes for the build to finish. Once live, test:
+  - Open `https://deepguard-ai-api.onrender.com/health` in your browser
+  - Confirm it returns: `{"status":"healthy","model_ready":true}`
+- [ ] Copy your Render backend URL: `https://deepguard-ai-api.onrender.com`
 
-**Option B — Git (if you know how):**
-```bash
-git clone https://huggingface.co/spaces/YOUR_USERNAME/deepguard-ai
-# Copy all project files into the cloned folder
-cd deepguard-ai
-git add .
-git commit -m "Deploy DeepGuard AI"
-git push
-```
+---
 
-### Verify Deployment
-- [ ] Go to your Space URL: `https://huggingface.co/spaces/YOUR_USERNAME/deepguard-ai`
-- [ ] Wait for the build to finish (watch the "Building" spinner — takes 2–5 minutes)
-- [ ] Once built, verify all 5 tabs of the dashboard work
-- [ ] Upload a sample CSV and verify predictions load
-- [ ] Copy the public URL and share it with the AI agent
+### Part 3: Deploy Frontend on Vercel (Free Hobby Tier)
+- [ ] Go to https://vercel.com and sign in with GitHub
+- [ ] Click **Add New... > Project**
+- [ ] Find and **Import** your `DeepGuard AI` repository
+- [ ] Configure the project:
+  - **Framework Preset:** `Next.js`
+  - **Root Directory:** Click **Edit** and choose `dashboard` *(CRITICAL STEP)*
+- [ ] Expand **Environment Variables** and add:
+  - Key: `BACKEND_URL` | Value: `https://deepguard-ai-api.onrender.com` (your Render URL from Part 2)
+  - Key: `NEXT_PUBLIC_API_URL` | Value: `https://deepguard-ai-api.onrender.com`
+- [ ] Click **Deploy**
+- [ ] Wait ~45 seconds for Vercel to build and publish your dashboard
+- [ ] Copy your Vercel URL: `https://deepguard-ai.vercel.app` (or similar)
 
-**Done?** Tell the AI agent: *"Deployment complete. Public URL: [your URL]"*
+---
+
+### Part 4: Verify Live Dashboard
+- [ ] Open your live Vercel URL
+- [ ] Verify that the **System Readiness** shows `10/10 Verified` and `Ready`
+- [ ] Go to **Batch Traffic Analyzer**, load benign or attack sample data, and click **Run Batch Threat Analysis**
+- [ ] Verify predictions and threat risk distributions render in real time
+- [ ] Note: If the backend was inactive for >15 minutes, the first request may take ~30-40 seconds for Render's free tier container to wake up.
+
+**Done?** Tell the AI agent: *"Deployment complete. Vercel URL: [url], Render URL: [url]"*
 
 ---
 

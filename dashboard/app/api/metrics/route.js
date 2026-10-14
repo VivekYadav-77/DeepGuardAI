@@ -3,9 +3,49 @@ import path from 'path';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  const backendUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
+
+  // 1. If backend URL is configured (e.g., Render deployment), forward request to FastAPI
+  if (backendUrl) {
+    try {
+      const cleanUrl = backendUrl.replace(/\/$/, '');
+      const res = await fetch(`${cleanUrl}/metrics`, {
+        cache: 'no-store',
+        headers: { 'Accept': 'application/json' },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return NextResponse.json(data);
+      }
+    } catch (remoteErr) {
+      console.warn(`[DeepGuard API] Failed to fetch metrics from backend (${backendUrl}):`, remoteErr.message);
+      // Fall through to local fallback if available
+    }
+  }
+
+  // 2. Local filesystem fallback (for offline local development)
   try {
     const rootDir = path.resolve(process.cwd(), '..');
     const modelDir = path.join(rootDir, 'model');
+
+    if (!fs.existsSync(modelDir)) {
+      if (backendUrl) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Could not reach backend at ${backendUrl}. Check if your Render Web Service is starting up (cold start may take 30-50s).`,
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Model directory not found and BACKEND_URL is not set. For Vercel, set BACKEND_URL in project environment variables.',
+        },
+        { status: 500 }
+      );
+    }
 
     const readJsonSafe = (filename) => {
       const p = path.join(modelDir, filename);
