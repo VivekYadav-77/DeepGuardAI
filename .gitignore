@@ -64,6 +64,7 @@ desktop.ini
 secrets.json
 credentials.json
 .streamlit/secrets.toml
+.Next.js/secrets.toml
 
 # IDE & Editor files
 .vscode/

@@ -4,11 +4,11 @@
 
 ---
 
-## Project Status: IN PROGRESS — Milestone M3 (Phase 6 Complete)
+## Project Status: IN PROGRESS — Milestone M4 / M5 (Phases 0–8 Complete)
 
 **Last Updated:** 2026-10-14
-**Current Milestone:** M3 (Phases 0, 1, 2, 3, 4, 5, 6, 8 Complete -> Next: Phase 7 Dashboard)
-**Current Phase:** Phase 6 (COMPLETE) -> Next: Phase 7 (Next.js Dashboard)
+**Current Milestone:** M4/M5 (Phases 0, 1, 2, 3, 4, 5, 6, 7, 8 Complete -> Next: Phase 9 QA / Phase 10 Deployment)
+**Current Phase:** Phase 8 (COMPLETE) -> Next: Phase 9 (Testing & QA)
 **Blocker:** None
 
 ---
@@ -24,8 +24,8 @@
 | Phase 4 | Evaluation | COMPLETE | 2026-10-14 | Logistic Regression baseline trained & saved. Both models evaluated on 18,896 held-out test samples. MLP: 99.52% acc, 99.52% F1, 0.9998 ROC-AUC vs Baseline: 95.30% acc, 95.27% F1, 0.9920 ROC-AUC. evaluation_metrics.json & confusion_matrix.png generated. 26/26 pytest passed. |
 | Phase 5 | Artifact Export | COMPLETE | 2026-10-14 | All 8 required artifacts + baseline verified in model/. src/export.py created with isolated fresh-load inference test. deepguard_artifacts.zip (100.9KB) packaged. tests/test_artifacts.py added (10/10 passed, 36/36 overall). |
 | Phase 7 | Next.js Dashboard | COMPLETE | 2026-10-14 | Built Next.js web application with 5 tabs, custom CSS dark/light theme, 3-color palette, Inter/JetBrains Mono fonts, src/validation.py, src/inference.py, app.py, and 12/12 new unit tests (55/55 overall). |
-| Phase 8 | Project Structure | COMPLETE | 2026-10-14 | Skeleton created (src, notebooks, model, reports, tests), requirements.txt, stubs, and pytest.ini configured. |
-| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py, test_model.py, test_evaluation.py, test_artifacts.py, test_notebook.py verified (43 passed). |
+| Phase 8 | Project Structure | COMPLETE | 2026-10-14 | Full directory skeleton verified (src, notebooks, model, reports, tests, docs), requirements.txt, .gitignore, stubs, and tests/test_structure.py created (8/8 passed). |
+| Phase 9 | Testing & QA | IN PROGRESS | — | tests/test_preprocessing.py, test_model.py, test_evaluation.py, test_artifacts.py, test_notebook.py, test_inference.py, test_validation.py, test_structure.py verified (63 passed). |
 | Phase 10 | Deployment | NOT STARTED | — | — |
 | Phase 11 | Academic Report | NOT STARTED | — | — |
 | Phase 12 | README | NOT STARTED | — | — |
@@ -205,7 +205,10 @@
 | 2026-10-14 | dashboard/app/api/sample-data/route.js | Created | Phase 7 |
 | 2026-10-14 | app.py | Modified (Streamlit & CLI entrypoint) | Phase 7 |
 | 2026-10-14 | requirements.txt | Modified (fixed Next.js string to streamlit>=1.28.0) | Phase 7 |
-| 2026-10-14 | docs/context.md | Modified | Phase 7 Complete |
+| 2026-10-14 | .gitignore | Modified (added .Next.js/secrets.toml) | Phase 8 |
+| 2026-10-14 | docs/phase8_structure.md | Modified (all checklist items marked complete) | Phase 8 |
+| 2026-10-14 | tests/test_structure.py | Created (8 unit tests for directory layout & stubs) | Phase 8 & 9 |
+| 2026-10-14 | docs/context.md | Modified | Phase 8 Complete |
 
 ---
 
@@ -250,6 +253,7 @@
 | 2026-10-14 | pytest tests/test_inference.py tests/test_validation.py -v | 12 passed in 18.89s | Phase 7 & 9 |
 | 2026-10-14 | npm.cmd run build (in dashboard/) | Next.js production build compiled cleanly (7 static pages) | Phase 7 |
 | 2026-10-14 | .venv\Scripts\pytest.exe -v | All 55 tests passed in 38.76s across full project suite | Phase 7 & 9 |
+| 2026-10-14 | .venv\Scripts\pytest.exe tests/test_structure.py -v | 8 passed in 0.15s (100% Phase 8 structure verified) | Phase 8 & 9 |
 
 ---
 
@@ -280,4 +284,6 @@
 | 2026-10-14 | Completed Phase 5 (Artifact Export). Created src/export.py, verified all 8 required model artifacts + baseline, validated schemas, performed isolated fresh-load inference test, packaged deepguard_artifacts.zip (100.9KB), updated DeepGuard_AI_Training.ipynb with Sections 20-23, created tests/test_artifacts.py (10/10 passed), and verified full test suite (36/36 passed). |
 | 2026-10-14 | Completed Phase 6 (Google Colab Training Notebook). Fully finalized notebooks/DeepGuard_AI_Training.ipynb with 49 self-contained cells covering all 16 pipeline requirements. Implemented nvidia-smi GPU/CPU detection, automated NSL-KDD download with Colab manual fallback, training curve plotting (model/training_curve.png), side-by-side confusion matrix, fresh load testing, and google.colab automatic browser download. Created tests/test_notebook.py (7/7 passed, 43/43 overall). Re-packaged deepguard_artifacts.zip (143.52 KB). Updated docs/vivek.md with Task Group 2 instructions. Ready for Phase 7 (Next.js Dashboard). |
 | 2026-10-14 | Completed Phase 7 (Next.js Dashboard). Implemented Next.js web application with 5 complete tabs, bespoke dark & light themes, 3-color palette (Obsidian/Slate, Precision Cobalt, Semantic Emerald/Crimson), Inter & JetBrains Mono typography, zero AI clichés. Built src/validation.py, src/inference.py, app.py, API routes (/api/metrics, /api/predict, /api/sample-data), tests/test_inference.py and tests/test_validation.py (55/55 pytest unit tests passing). Browser verified all tabs, theme toggling, and batch prediction. |
+| 2026-10-14 | Phase 8 (Project Structure) audited, formalized, and verified. Validated complete directory layout (src/, notebooks/, model/, reports/, tests/, docs/), confirmed module exports and stub files, verified .gitignore and requirements.txt, marked phase8_structure.md checklist complete, and added tests/test_structure.py with 8 automated unit tests (8/8 passed). |
+
 

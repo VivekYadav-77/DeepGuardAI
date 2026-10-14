@@ -1,4 +1,4 @@
-﻿# Phase 8 — Project Structure
+# Phase 8 — Project Structure
 
 > **AGENT INSTRUCTION:** Read `masterplan.md` and `context.md` before starting. This phase creates the project skeleton — folders, placeholder files, `.gitignore`, and `requirements.txt`. This is part of Milestone 1 and should be done early before any code is written.
 
@@ -131,17 +131,17 @@ credentials.json
 
 ## Output Checklist
 
-- [ ] All folders created: `src/`, `notebooks/`, `model/`, `reports/`, `tests/`, `docs/`
-- [ ] `src/__init__.py` created
-- [ ] `src/model.py` stub created
-- [ ] `src/preprocessing.py` stub created
-- [ ] `src/inference.py` stub created
-- [ ] `src/validation.py` stub created
-- [ ] `app.py` stub created
-- [ ] `requirements.txt` created with all dependencies
-- [ ] `.gitignore` created
-- [ ] Report stub files created in `reports/`
-- [ ] Phase 8 marked COMPLETE in `context.md`
+- [x] All folders created: `src/`, `notebooks/`, `model/`, `reports/`, `tests/`, `docs/`
+- [x] `src/__init__.py` created
+- [x] `src/model.py` stub created
+- [x] `src/preprocessing.py` stub created
+- [x] `src/inference.py` stub created
+- [x] `src/validation.py` stub created
+- [x] `app.py` stub created
+- [x] `requirements.txt` created with all dependencies
+- [x] `.gitignore` created
+- [x] Report stub files created in `reports/`
+- [x] Phase 8 marked COMPLETE in `context.md`
 
 ---
 

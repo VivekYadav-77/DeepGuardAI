@@ -4,6 +4,9 @@ export const metadata = {
   title: 'DeepGuard AI — Network Intrusion Detection System',
   description:
     'Academic demonstration of deep learning-based network intrusion detection on the NSL-KDD benchmark using a PyTorch Multilayer Perceptron.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {
