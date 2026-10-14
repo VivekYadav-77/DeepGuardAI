@@ -17,6 +17,9 @@ build/
 dist/
 *.egg-info/
 *.egg
+dashboard/node_modules/
+dashboard/.next/
+dashboard/.temp/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -25,6 +28,7 @@ dist/
 # Datasets & Local Raw Data
 data/
 *.csv
+!dashboard/public/*.csv
 *.tsv
 *.txt.gz
 *.parquet

@@ -10,10 +10,10 @@
   "optimizer": "Adam",
   "lr": 0.001,
   "batch_size": 256,
-  "epochs_trained": 47,
+  "epochs_trained": 39,
   "early_stopping_patience": 10,
-  "best_epoch": 37,
-  "best_val_loss": 0.01526,
+  "best_epoch": 29,
+  "best_val_loss": 0.0172,
   "device_used": "cpu",
-  "pytorch_version": "2.14.1+cpu"
+  "pytorch_version": "2.11.0+cpu"
 }

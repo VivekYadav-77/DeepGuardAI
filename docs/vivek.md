@@ -126,12 +126,12 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
 
 ### Test the Dashboard Locally
 - [ ] Open PowerShell
-- [ ] Run:
+- [ ] Run the Next.js Web Dashboard:
   ```powershell
-  cd "d:\web devfiles\DeepGuard AI"
-  Next.js run app.py
+  cd "d:\web devfiles\DeepGuard AI\dashboard"
+  npm run dev
   ```
-- [ ] Open your browser and go to: `http://localhost:8501`
+- [ ] Open your browser and go to: `http://localhost:3000`
 - [ ] Check all 5 tabs load correctly:
   - [ ] Overview tab — shows project info and metric cards
   - [ ] Traffic Analyzer tab — CSV upload works
@@ -140,6 +140,7 @@ The dataset selected for DeepGuard AI is **NSL-KDD** (from Canadian Institute fo
   - [ ] Model Information tab — shows all system details
 - [ ] Upload a sample CSV and verify predictions appear (no crashes)
 - [ ] Press `Ctrl+C` in PowerShell to stop the dashboard when done
+- [ ] *(Optional fallback)*: Python runner also supported via `streamlit run app.py` on `http://localhost:8501`.
 
 **Done?** Tell the AI agent: *"Dashboard verified locally, all tabs working"*
 
